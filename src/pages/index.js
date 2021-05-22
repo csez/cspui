@@ -1,41 +1,120 @@
-import React from 'react'
-import { graphql } from 'gatsby'
-import get from 'lodash/get'
-import { Helmet } from 'react-helmet'
-import Hero from '../components/hero'
-import Layout from '../components/layout'
-import ArticlePreview from '../components/article-preview'
+import React from "react";
+import { graphql } from "gatsby";
+import get from "lodash/get";
+import { Helmet } from "react-helmet";
+import Hero from "../components/hero";
+import Layout from "../components/layout";
+import ArticlePreview from "../components/article-preview";
+import styled from "styled-components";
+import IMG_ROULETTE from "../../static/images/register.gif";
+
+const Wrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 1500px;
+  background-color: black;
+`;
+
+const RegisterImage = styled.img`
+  margin: 20px 0;
+  width: 420px;
+  height: 100px;
+`;
+
+const Title = styled.p`
+  margin: 20px 0;
+  font-size: 1.5rem;
+`;
+
+const MainWrapper = styled.div`
+  position: relative;
+`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  width: 100%;
+  z-index: 10;
+  opacity: 1;
+`;
 
 class RootIndex extends React.Component {
   render() {
-    const siteTitle = get(this, 'props.data.site.siteMetadata.title')
-    const posts = get(this, 'props.data.allContentfulBlogPost.edges')
-    const [author] = get(this, 'props.data.allContentfulPerson.edges')
+    const siteTitle = "ปุ๋ยบาคา ไร่ร่านาคำ";
+    const posts = get(this, "props.data.allContentfulBlogPost.edges");
+    const [author] = get(this, "props.data.allContentfulPerson.edges");
+    const metaDescription = "ปุ๋ยบาคา ปุ๋ยดีของไทย ไว้ใจได้ทุกไร่ร่า";
+    const keywords = ["ปุ๋ยบาคา"];
 
     return (
-      <Layout location={this.props.location}>
-        <div style={{ background: '#fff' }}>
-          <Helmet title={siteTitle} />
-          <Hero data={author.node} />
-          <div className="wrapper">
-            <h2 className="section-headline">Recent articles</h2>
-            <ul className="article-list">
-              {posts.map(({ node }) => {
-                return (
-                  <li key={node.slug}>
-                    <ArticlePreview article={node} />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
-      </Layout>
-    )
+      <div>
+        <Wrapper>
+          <RegisterImage src={IMG_ROULETTE} alt="สมัครสมาชิก" />
+          <Title>สมัครสมาชิก ฟรีเครดิต</Title>
+        </Wrapper>
+        <MainWrapper>
+          <Layout location={this.props.location}>
+            <div style={{ background: "#fff" }}>
+              <Helmet
+                title={siteTitle}
+                meta={[
+                  {
+                    name: `description`,
+                    content: metaDescription,
+                  },
+                  {
+                    name: `keywords`,
+                    content: (keywords || []).join(","),
+                  },
+                  {
+                    property: `og:title`,
+                    content: siteTitle,
+                  },
+                  {
+                    property: `og:description`,
+                    content: metaDescription,
+                  },
+                  {
+                    property: `og:type`,
+                    content: `website`,
+                  },
+                  {
+                    property: `og:url`,
+                    content: `https://cspui.gatsbyjs.io/`,
+                  },
+                ]}
+              />
+
+              <Hero data={author.node} />
+              <div className="wrapper">
+                <h2 className="section-headline">สินค้าทั้งหมด</h2>
+                <ul className="article-list">
+                  {posts.map(({ node }) => {
+                    return (
+                      <li key={node.slug}>
+                        <ArticlePreview article={node} />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </Layout>
+          <Background />
+        </MainWrapper>
+      </div>
+    );
   }
 }
 
-export default RootIndex
+export default RootIndex;
 
 export const pageQuery = graphql`
   query HomeQuery {
@@ -83,4 +162,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`
+`;
