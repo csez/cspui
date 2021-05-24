@@ -6,7 +6,13 @@ import Hero from "../components/hero";
 import Layout from "../components/layout";
 import ArticlePreview from "../components/article-preview";
 import styled from "styled-components";
-import IMG_ROULETTE from "../../static/images/register.gif";
+import GIF_1 from "../../static/images/Gif-1.gif";
+import GIF_2 from "../../static/images/Gif-2.gif";
+import GIF_3 from "../../static/images/Gif-3.gif";
+import GIF_LINE from "../../static/images/Gif-line.gif";
+import GIF_REGISTER from "../../static/images/Gif-register.gif";
+import { Link } from "gatsby";
+import { MEDIA } from "../utils/stylesPageLayout";
 
 const Wrapper = styled.div`
   position: relative;
@@ -14,19 +20,26 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 1500px;
+
   background-color: black;
+  padding: 40px 0;
 `;
 
-const RegisterImage = styled.img`
-  margin: 20px 0;
-  width: 420px;
-  height: 100px;
+const ImageWrapper = styled.div`
+  margin: 0 40px 40px;
+
+  ${MEDIA.DESKTOP`
+    width: 728px;
+  `}
 `;
 
-const Title = styled.p`
-  margin: 20px 0;
-  font-size: 1.5rem;
+const LineWrapper = styled.div`
+  margin: 0 40px 40px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: auto;
 `;
 
 const MainWrapper = styled.div`
@@ -52,12 +65,37 @@ class RootIndex extends React.Component {
     const [author] = get(this, "props.data.allContentfulPerson.edges");
     const metaDescription = "ปุ๋ยบาคา ปุ๋ยดีของไทย ไว้ใจได้ทุกไร่ร่า";
     const keywords = ["ปุ๋ยบาคา"];
+    const LINK_URL = "https://cs1baccarat.com/";
+    const LINE_URL = "line://ti/p/@CSBETWAY";
 
     return (
       <div>
         <Wrapper>
-          <RegisterImage src={IMG_ROULETTE} alt="สมัครสมาชิก" />
-          <Title>สมัครสมาชิก ฟรีเครดิต</Title>
+          <ImageWrapper>
+            <Link to={LINK_URL}>
+              <Image src={GIF_1} />
+            </Link>
+          </ImageWrapper>
+          <ImageWrapper>
+            <Link to={LINK_URL}>
+              <Image src={GIF_2} />
+            </Link>
+          </ImageWrapper>
+          <ImageWrapper>
+            <Link to={LINK_URL}>
+              <Image src={GIF_3} />
+            </Link>
+          </ImageWrapper>
+          <ImageWrapper>
+            <Link to={LINK_URL}>
+              <Image src={GIF_REGISTER} />
+            </Link>
+          </ImageWrapper>
+          <LineWrapper>
+            <a href={LINE_URL}>
+              <Image src={GIF_LINE} />
+            </a>
+          </LineWrapper>
         </Wrapper>
         <MainWrapper>
           <Layout location={this.props.location}>
