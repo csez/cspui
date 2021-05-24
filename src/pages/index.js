@@ -46,17 +46,17 @@ const MainWrapper = styled.div`
   position: relative;
 `;
 
-const Background = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: black;
-  width: 100%;
-  z-index: 10;
-  opacity: 0;
-`;
+// const Background = styled.div`
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   background-color: black;
+//   width: 100%;
+//   z-index: 1;
+//   opacity: 0;
+// `;
 
 class RootIndex extends React.Component {
   render() {
@@ -145,7 +145,7 @@ class RootIndex extends React.Component {
               </div>
             </div>
           </Layout>
-          <Background />
+          {/* <Background /> */}
         </MainWrapper>
       </div>
     );
