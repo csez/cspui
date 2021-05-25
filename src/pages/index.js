@@ -55,7 +55,7 @@ const Background = styled.div`
   background-color: black;
   width: 100%;
   z-index: 1;
-  opacity: 1;
+  opacity: 0.6;
 `;
 
 class RootIndex extends React.Component {
