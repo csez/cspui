@@ -167,7 +167,7 @@ export const pageQuery = graphql`
           imageList {
             title
             description
-            fluid(maxWidth: 728, resizingBehavior: PAD) {
+            fluid(maxWidth: 728, resizingBehavior: SCALE) {
               ...GatsbyContentfulFluid
             }
           }
