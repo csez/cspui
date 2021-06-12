@@ -19,7 +19,7 @@ export const DEVICE_MINWIDTH = {
 export const MEDIA = {
   MOBILE: (...args) => {
     return css`
-      @media (max-width: ${DEVICE_MINWIDTH.TABLET - 0.001}px) {
+      @media (max-width: ${DEVICE_MINWIDTH.TABLET - 1}px) {
         ${css(...args)}
       }
     `;
@@ -27,7 +27,7 @@ export const MEDIA = {
   TABLET: (...args) => {
     return css`
       @media (min-width: ${DEVICE_MINWIDTH.TABLET}px) and (max-width: ${DEVICE_MINWIDTH.DESKTOP -
-        0.001}px) {
+        1}px) {
         ${css(...args)}
       }
     `;

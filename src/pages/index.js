@@ -6,13 +6,8 @@ import Hero from "../components/hero";
 import Layout from "../components/layout";
 import ArticlePreview from "../components/article-preview";
 import styled from "styled-components";
-import GIF_1 from "../../static/images/Gif-1.gif";
-import GIF_2 from "../../static/images/Gif-2.gif";
-import GIF_3 from "../../static/images/Gif-3.gif";
-import GIF_LINE from "../../static/images/Gif-line.gif";
-import GIF_REGISTER from "../../static/images/Gif-register.gif";
-import { Link } from "gatsby";
 import { MEDIA } from "../utils/stylesPageLayout";
+import Img from "gatsby-image";
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,17 +22,27 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   margin: 0 40px 40px;
-
+  width: 80%;
   ${MEDIA.DESKTOP`
     width: 728px;
+  `}
+  ${MEDIA.MOBILE`
+    margin-bottom: 25px;
   `}
 `;
 
 const LineWrapper = styled.div`
   margin: 0 40px 40px;
+  width: 404px;
+  ${MEDIA.SMALLEST`
+    width: 50%;
+  `}
+  ${MEDIA.MOBILE`
+    margin-bottom: 25px;
+`}
 `;
 
-const Image = styled.img`
+const Image = styled(Img)`
   width: 100%;
   height: auto;
 `;
@@ -63,6 +68,10 @@ class RootIndex extends React.Component {
     const siteTitle = "ปุ๋ยบาคา ไร่ร่านาคำ";
     const posts = get(this, "props.data.allContentfulBlogPost.edges");
     const [author] = get(this, "props.data.allContentfulPerson.edges");
+    const imageList = get(
+      this,
+      "props.data.allContentfulHome.edges[0].node.imageList"
+    );
     const metaDescription = "ปุ๋ยบาคา ปุ๋ยดีของไทย ไว้ใจได้ทุกไร่ร่า";
     const keywords = ["ปุ๋ยบาคา"];
     const LINK_URL = "https://cs1baccarat.com/";
@@ -71,31 +80,25 @@ class RootIndex extends React.Component {
     return (
       <div>
         <Wrapper>
-          <ImageWrapper>
-            <Link to={LINK_URL}>
-              <Image src={GIF_1} />
-            </Link>
-          </ImageWrapper>
-          <ImageWrapper>
-            <Link to={LINK_URL}>
-              <Image src={GIF_2} />
-            </Link>
-          </ImageWrapper>
-          <ImageWrapper>
-            <Link to={LINK_URL}>
-              <Image src={GIF_3} />
-            </Link>
-          </ImageWrapper>
-          <ImageWrapper>
-            <Link to={LINK_URL}>
-              <Image src={GIF_REGISTER} />
-            </Link>
-          </ImageWrapper>
-          <LineWrapper>
-            <a href={LINE_URL}>
-              <Image src={GIF_LINE} />
-            </a>
-          </LineWrapper>
+          {imageList.map((image, index) => {
+            if (image?.title.indexOf("button") === 0) {
+              return (
+                <LineWrapper key={`image-${index}`}>
+                  <a href={get(image, "description", LINE_URL)}>
+                    <Image alt={image.title} fluid={image.fluid} />
+                  </a>
+                </LineWrapper>
+              );
+            } else {
+              return (
+                <ImageWrapper key={`image-${index}`}>
+                  <a href={get(image, "description", LINK_URL)}>
+                    <Image alt={image.title} fluid={image.fluid} />
+                  </a>
+                </ImageWrapper>
+              );
+            }
+          })}
         </Wrapper>
         <MainWrapper>
           <Layout location={this.props.location}>
@@ -156,6 +159,21 @@ export default RootIndex;
 
 export const pageQuery = graphql`
   query HomeQuery {
+    allContentfulHome(
+      filter: { contentful_id: { eq: "4AaDLZRl064ZGIPFPzSMzT" } }
+    ) {
+      edges {
+        node {
+          imageList {
+            title
+            description
+            fluid(maxWidth: 728, resizingBehavior: PAD) {
+              ...GatsbyContentfulFluid
+            }
+          }
+        }
+      }
+    }
     allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
       edges {
         node {
