@@ -172,7 +172,10 @@ export const pageQuery = graphql`
         }
       }
     }
-    allContentfulBlogPost(sort: { fields: [publishDate], order: DESC }) {
+    allContentfulBlogPost(
+      sort: { fields: [publishDate], order: ASC }
+      limit: 3
+    ) {
       edges {
         node {
           title
