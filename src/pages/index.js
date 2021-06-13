@@ -159,9 +159,7 @@ export default RootIndex;
 
 export const pageQuery = graphql`
   query HomeQuery {
-    allContentfulHome(
-      filter: { contentful_id: { eq: "4AaDLZRl064ZGIPFPzSMzT" } }
-    ) {
+    allContentfulHome(filter: { name: { eq: "Baccarat" } }) {
       edges {
         node {
           imageList {
